@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Two Chat Containers Horizontally</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f2f2f2;
+        }
+
+        .chat-container-wrapper {
+            display: flex;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 20px auto;
+        }
+
+        .chat-container {
+            flex: 1;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin: 0 10px;
+        }
+
+        .message-area {
+            height: 300px;
+            overflow-y: scroll;
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        .input-area {
+            display: flex;
+            margin-top: 10px;
+        }
+
+        .message-input {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-right: 8px;
+        }
+
+        .send-button {
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<div class="chat-container-wrapper">
+    <div class="chat-container">
+        <div class="message-area" id="message-area1"></div>
+
+        <div class="input-area">
+            <input type="text" class="message-input" placeholder="Type your message...">
+            <button class="send-button" onclick="sendMessage('message-area1')">Send</button>
+        </div>
+    </div>
+
+    <div class="chat-container">
+        <div class="message-area" id="message-area2"></div>
+
+        <div class="input-area">
+            <input type="text" class="message-input" placeholder="Type your message...">
+            <button class="send-button" onclick="sendMessage('message-area2')">Send</button>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
+<script src="/socket.io/socket.io.js"></script>
+
+
+
+
+
