@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Two Chat Containers Horizontally</title>
+    <title>Chat App</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -12,15 +13,9 @@
             background-color: #f2f2f2;
         }
 
-        .chat-container-wrapper {
-            display: flex;
-            justify-content: space-between;
-            max-width: 1200px;
-            margin: 20px auto;
-        }
-
         .chat-container {
             flex: 1;
+            width: 80%;
             background-color: #fff;
             padding: 20px;
             border-radius: 8px;
@@ -41,7 +36,7 @@
             margin-top: 10px;
         }
 
-        .message-input {
+        #message-input {
             flex: 1;
             padding: 8px;
             border: 1px solid #ddd;
@@ -59,33 +54,52 @@
         }
     </style>
 </head>
+
 <body>
 
-<div class="chat-container-wrapper">
     <div class="chat-container">
         <div class="message-area" id="message-area1"></div>
 
         <div class="input-area">
-            <input type="text" class="message-input" placeholder="Type your message...">
-            <button class="send-button" onclick="sendMessage('message-area1')">Send</button>
+            <input type="text" id="message-input" placeholder="Type your message...">
+            <button class="send-button" onclick="sendMessage()">Send</button>
         </div>
     </div>
-
-    <div class="chat-container">
-        <div class="message-area" id="message-area2"></div>
-
-        <div class="input-area">
-            <input type="text" class="message-input" placeholder="Type your message...">
-            <button class="send-button" onclick="sendMessage('message-area2')">Send</button>
-        </div>
-    </div>
-</div>
-
+    <script src="/socket.io/socket.io.js"></script>
 </body>
 </html>
-<script src="/socket.io/socket.io.js"></script>
 
+<script>
+    // Connect to the Socket.IO server
+    const socket = io();
 
+    socket.on('connect', () => {
+        console.log('Connected to the server');
+    });
 
+    socket.on('disconnect', () => {
+        console.log('Disconnected from the server');
+    });
 
+    function sendMessage() {
+        const messageInput = document.getElementById('message-input');
+        const message = messageInput.value;
+        console.log(message);
+        socket.emit('chat message', message);
+        messageInput.value = '';
+    }
 
+    socket.on('chat message', (msg) => {
+        // Create a new div element to represent the message
+        const messageElement = document.createElement('div');
+        messageElement.textContent = msg;
+
+        // Get the "message-area1" element and append the new message element
+        const area = document.getElementById('message-area1');
+        area.appendChild(messageElement);
+
+        area.scrollTop = area.scrollHeight;
+    });
+
+    
+</script>
